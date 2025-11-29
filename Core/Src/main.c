@@ -26,7 +26,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "string.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -58,132 +58,134 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-// SDå¡çš„FatFSæ–‡ä»¶ç³»ç»ŸæŒ‚è½½ã€æ ¼å¼åŒ–ã€è¯»å†™æµ‹è¯•
+// SD¿¨µÄFatFSÎÄ¼şÏµÍ³¹ÒÔØ¡¢¸ñÊ½»¯¡¢¶ÁĞ´²âÊÔ
 void FatFsTest(void)
 {
-    static FATFS myFatFs;                                                 // FatFs æ–‡ä»¶ç³»ç»Ÿå¯¹è±¡; è¿™ä¸ªç»“æ„ä½“å ç”¨598å­—èŠ‚ï¼Œæœ‰ç‚¹å¤§ï¼Œéœ€ç”¨staticä¿®é¥°(å­˜æ”¾åœ¨å…¨å±€æ•°æ®åŒº), é¿å…stackæº¢å‡º
-    static FIL myFile;                                                    // æ–‡ä»¶å¯¹è±¡; è¿™ä¸ªç»“æ„ä½“å ç”¨570å­—èŠ‚ï¼Œæœ‰ç‚¹å¤§ï¼Œéœ€ç”¨staticä¿®é¥°(å­˜æ”¾åœ¨å…¨å±€æ•°æ®åŒº), é¿å…stackæº¢å‡º
-    static FRESULT f_res;                                                 // æ–‡ä»¶æ“ä½œç»“æœ
-    static uint32_t num;                                                  // æ–‡ä»¶å®é™…æˆåŠŸè¯»å†™çš„å­—èŠ‚æ•°
-    static uint8_t aReadData[1024] = {0};                                 // è¯»å–ç¼“å†²åŒº; è¿™ä¸ªæ•°ç»„å ç”¨1024å­—èŠ‚ï¼Œéœ€ç”¨staticä¿®é¥°(å­˜æ”¾åœ¨å…¨å±€æ•°æ®åŒº), é¿å…stackæº¢å‡º
-    static uint8_t aWriteBuf[] =  "Test, this is FatFs Test ! \r\n";      // è¦å†™å…¥çš„æ•°æ®
+    static FATFS myFatFs;                                                 // FatFs ÎÄ¼şÏµÍ³¶ÔÏó; Õâ¸ö½á¹¹ÌåÕ¼ÓÃ598×Ö½Ú£¬ÓĞµã´ó£¬ĞèÓÃstaticĞŞÊÎ(´æ·ÅÔÚÈ«¾ÖÊı¾İÇø), ±ÜÃâstackÒç³ö
+    static FIL myFile;                                                    // ÎÄ¼ş¶ÔÏó; Õâ¸ö½á¹¹ÌåÕ¼ÓÃ570×Ö½Ú£¬ÓĞµã´ó£¬ĞèÓÃstaticĞŞÊÎ(´æ·ÅÔÚÈ«¾ÖÊı¾İÇø), ±ÜÃâstackÒç³ö
+    static FRESULT f_res;                                                 // ÎÄ¼ş²Ù×÷½á¹û
+    static uint32_t num;                                                  // ÎÄ¼şÊµ¼Ê³É¹¦¶ÁĞ´µÄ×Ö½ÚÊı
+    static uint8_t aReadData[1024] = {0};                                 // ¶ÁÈ¡»º³åÇø; Õâ¸öÊı×éÕ¼ÓÃ1024×Ö½Ú£¬ĞèÓÃstaticĞŞÊÎ(´æ·ÅÔÚÈ«¾ÖÊı¾İÇø), ±ÜÃâstackÒç³ö
+    static uint8_t aWriteBuf[] =  "Test, this is FatFs Test ! \r\n";      // ÒªĞ´ÈëµÄÊı¾İ
  
-    // é‡è¦çš„å»¶æ—¶ï¼šé¿å…çƒ§å½•æœŸé—´çš„å¤ä½å¯¼è‡´æ–‡ä»¶è¯»å†™ã€æ ¼å¼åŒ–ç­‰é”™è¯¯
-    HAL_Delay(1000);                                                      // é‡è¦ï¼šç¨ä½œå»¶æ—¶å†å¼€å§‹è¯»å†™æµ‹è¯•; é¿å…æœ‰äº›ä»¿çœŸå™¨çƒ§å½•æœŸé—´çš„å¤šæ¬¡å¤ä½ï¼ŒçŸ­æš‚è¿è¡Œäº†ç¨‹åºï¼Œå¯¼è‡´ä¸‹åˆ—è¯»å†™æ•°æ®ä¸å®Œæ•´ã€‚
+    // ÖØÒªµÄÑÓÊ±£º±ÜÃâÉÕÂ¼ÆÚ¼äµÄ¸´Î»µ¼ÖÂÎÄ¼ş¶ÁĞ´¡¢¸ñÊ½»¯µÈ´íÎó
+    HAL_Delay(1000);                                                      // ÖØÒª£ºÉÔ×÷ÑÓÊ±ÔÙ¿ªÊ¼¶ÁĞ´²âÊÔ; ±ÜÃâÓĞĞ©·ÂÕæÆ÷ÉÕÂ¼ÆÚ¼äµÄ¶à´Î¸´Î»£¬¶ÌÔİÔËĞĞÁË³ÌĞò£¬µ¼ÖÂÏÂÁĞ¶ÁĞ´Êı¾İ²»ÍêÕû¡£
  
-    // 1ã€æŒ‚è½½æµ‹è¯•ï¼šåœ¨SDå¡æŒ‚è½½æ–‡ä»¶ç³»ç»Ÿ
+    // 1¡¢¹ÒÔØ²âÊÔ£ºÔÚSD¿¨¹ÒÔØÎÄ¼şÏµÍ³
     printf("\r\n\r\n");
-    printf("1ã€Load FatFs test ****** \r\n");
-    f_res = f_mount(&myFatFs, "0:", 1);                                   // åœ¨SDå¡ä¸ŠæŒ‚è½½æ–‡ä»¶ç³»ç»Ÿ; å‚æ•°ï¼šæ–‡ä»¶ç³»ç»Ÿå¯¹è±¡ã€é©±åŠ¨å™¨è·¯å¾„ã€è¯»å†™æ¨¡å¼(0åªè¯»ã€1è¯»å†™)
-    if (f_res == FR_NO_FILESYSTEM)                                        // æ£€æŸ¥æ˜¯å¦å·²æœ‰æ–‡ä»¶ç³»ç»Ÿï¼Œå¦‚æœæ²¡æœ‰ï¼Œå°±æ ¼å¼åŒ–åˆ›å»ºåˆ›å»ºæ–‡ä»¶ç³»ç»Ÿ
+    printf("1¡¢Load FatFs test ****** \r\n");
+    f_res = f_mount(&myFatFs, "0:", 1);                                   // ÔÚSD¿¨ÉÏ¹ÒÔØÎÄ¼şÏµÍ³; ²ÎÊı£ºÎÄ¼şÏµÍ³¶ÔÏó¡¢Çı¶¯Æ÷Â·¾¶¡¢¶ÁĞ´Ä£Ê½(0Ö»¶Á¡¢1¶ÁĞ´)
+    if (f_res == FR_NO_FILESYSTEM)                                        // ¼ì²éÊÇ·ñÒÑÓĞÎÄ¼şÏµÍ³£¬Èç¹ûÃ»ÓĞ£¬¾Í¸ñÊ½»¯´´½¨´´½¨ÎÄ¼şÏµÍ³
     {
         printf("The SD card has no file system,Strating to format......\r\n");
-        static uint8_t aMountBuffer[4096];                                // æ ¼å¼åŒ–æ—¶æ‰€éœ€çš„ä¸´æ—¶ç¼“å­˜; å—å¤§å°512çš„å€æ•°; å€¼è¶Šå¤§æ ¼å¼åŒ–è¶Šå¿«, å¦‚æœå†…å­˜ä¸å¤Ÿï¼Œå¯æ”¹ä¸º512æˆ–è€…1024; å½“éœ€è¦åœ¨å‡½æ•°å†…å®šä¹‰è¿™ç§å¤§ç¼“å­˜æ—¶ï¼Œè¦ç”¨staticä¿®é¥°ï¼Œä»¤ç¼“å­˜å­˜æ”¾åœ¨å…¨å±€æ•°æ®åŒºå†…ï¼Œä¸ç„¶ï¼Œå¯èƒ½ä¼šå¯¼è‡´stackæº¢å‡ºã€‚
-        f_res = f_mkfs("0:", 0, 0, aMountBuffer, sizeof(aMountBuffer));   // æ ¼å¼åŒ–SDå¡; å‚æ•°ï¼šé©±åŠ¨å™¨ã€æ–‡ä»¶ç³»ç»Ÿ(0-è‡ªåŠ¨\1-FAT12\2-FAT16\3-FAT32\4-exFat)ã€ç°‡å¤§å°(0ä¸ºè‡ªåŠ¨é€‰æ‹©)ã€æ ¼å¼åŒ–ä¸´æ—¶ç¼“å†²åŒºã€ç¼“å†²åŒºå¤§å°; æ ¼å¼åŒ–å‰å¿…é¡»å…ˆf_mount(x,x,1)æŒ‚è½½ï¼Œå³å¿…é¡»ç”¨è¯»å†™æ–¹å¼æŒ‚è½½; å¦‚æœSDå¡å·²æ ¼å¼åŒ–ï¼Œf_mkfs()çš„ç¬¬2ä¸ªå‚æ•°ï¼Œä¸èƒ½ç”¨0è‡ªåŠ¨ï¼Œå¿…é¡»æŒ‡å®šæŸä¸ªæ–‡ä»¶ç³»ç»Ÿã€‚
-        if (f_res == FR_OK)                                               // æ ¼å¼åŒ– æˆåŠŸ
+        static uint8_t aMountBuffer[4096];                                // ¸ñÊ½»¯Ê±ËùĞèµÄÁÙÊ±»º´æ; ¿é´óĞ¡512µÄ±¶Êı; ÖµÔ½´ó¸ñÊ½»¯Ô½¿ì, Èç¹ûÄÚ´æ²»¹»£¬¿É¸ÄÎª512»òÕß1024; µ±ĞèÒªÔÚº¯ÊıÄÚ¶¨ÒåÕâÖÖ´ó»º´æÊ±£¬ÒªÓÃstaticĞŞÊÎ£¬Áî»º´æ´æ·ÅÔÚÈ«¾ÖÊı¾İÇøÄÚ£¬²»È»£¬¿ÉÄÜ»áµ¼ÖÂstackÒç³ö¡£
+        f_res = f_mkfs("0:", 0, 0, aMountBuffer, sizeof(aMountBuffer));   // ¸ñÊ½»¯SD¿¨; ²ÎÊı£ºÇı¶¯Æ÷¡¢ÎÄ¼şÏµÍ³(0-×Ô¶¯\1-FAT12\2-FAT16\3-FAT32\4-exFat)¡¢´Ø´óĞ¡(0Îª×Ô¶¯Ñ¡Ôñ)¡¢¸ñÊ½»¯ÁÙÊ±»º³åÇø¡¢»º³åÇø´óĞ¡; ¸ñÊ½»¯Ç°±ØĞëÏÈf_mount(x,x,1)¹ÒÔØ£¬¼´±ØĞëÓÃ¶ÁĞ´·½Ê½¹ÒÔØ; Èç¹ûSD¿¨ÒÑ¸ñÊ½»¯£¬f_mkfs()µÄµÚ2¸ö²ÎÊı£¬²»ÄÜÓÃ0×Ô¶¯£¬±ØĞëÖ¸¶¨Ä³¸öÎÄ¼şÏµÍ³¡£
+        if (f_res == FR_OK)                                               // ¸ñÊ½»¯ ³É¹¦
         {
             printf("SD card format: success \r\n");
-            f_res = f_mount(NULL, "0:", 1);                               // æ ¼å¼åŒ–åï¼Œå…ˆå–æ¶ˆæŒ‚è½½
-            f_res = f_mount(&myFatFs, "0:", 1);                           // é‡æ–°æŒ‚è½½
+            f_res = f_mount(NULL, "0:", 1);                               // ¸ñÊ½»¯ºó£¬ÏÈÈ¡Ïû¹ÒÔØ
+            f_res = f_mount(&myFatFs, "0:", 1);                           // ÖØĞÂ¹ÒÔØ
             if (f_res == FR_OK)
-                printf("FatFs load success \r\n");                            // æŒ‚è½½æˆåŠŸ
+                printf("FatFs load success \r\n");                            // ¹ÒÔØ³É¹¦
             else
-                return;                                                   // æŒ‚è½½å¤±è´¥ï¼Œé€€å‡ºå‡½æ•°
+                return;                                                   // ¹ÒÔØÊ§°Ü£¬ÍË³öº¯Êı
         }
         else
         {
-            printf("SD card format: failed \r\n");                              // æ ¼å¼åŒ– å¤±è´¥
+            printf("SD card format: failed \r\n");                              // ¸ñÊ½»¯ Ê§°Ü
             return;
         }
     }
-    else if (f_res != FR_OK)                                              // æŒ‚è½½å¼‚å¸¸
+    else if (f_res != FR_OK)                                              // ¹ÒÔØÒì³£
     {
-        printf("FatFs æŒ‚è½½å¼‚å¸¸: %d; Check if MX_SDIO_SD_Init() has beed change to 1Bæ˜¯å¦å·²ä¿®æ”¹1B\r", f_res);
+        printf("FatFs ¹ÒÔØÒì³£: %d; Check if MX_SDIO_SD_Init() has beed change to 1BÊÇ·ñÒÑĞŞ¸Ä1B\r", f_res);
         return;
     }
-    else                                                                  // æŒ‚è½½æˆåŠŸ
+    else                                                                  // ¹ÒÔØ³É¹¦
     {
-        if (myFatFs.fs_type == 0x03)                                      // FAT32; 1-FAT12ã€2-FAT16ã€3-FAT32ã€4-exFat
-            printf("SD card has file systemå¡å·²æœ‰æ–‡ä»¶ç³»ç»Ÿ: FAT32\n");
-        if (myFatFs.fs_type == 0x04)                                      // exFAT; 1-FAT12ã€2-FAT16ã€3-FAT32ã€4-exFat
-            printf("SDå¡å·²æœ‰æ–‡ä»¶ç³»ç»Ÿ: exFAT\n");                         
-        printf("FatFs æŒ‚è½½æˆåŠŸ \r\n");                                    // æŒ‚è½½æˆåŠŸ
+        if (myFatFs.fs_type == 0x03)                                      // FAT32; 1-FAT12¡¢2-FAT16¡¢3-FAT32¡¢4-exFat
+            printf("SD card has file system¿¨ÒÑÓĞÎÄ¼şÏµÍ³: FAT32\n");
+        if (myFatFs.fs_type == 0x04)                                      // exFAT; 1-FAT12¡¢2-FAT16¡¢3-FAT32¡¢4-exFat
+            printf("SD¿¨ÒÑÓĞÎÄ¼şÏµÍ³: exFAT\n");                         
+        printf("FatFs ¹ÒÔØ³É¹¦ \r\n");                                    // ¹ÒÔØ³É¹¦
     }
  
-    // 2ã€å†™å…¥æµ‹è¯•ï¼šæ‰“å¼€æˆ–åˆ›å»ºæ–‡ä»¶ï¼Œå¹¶å†™å…¥æ•°æ®
+    // 2¡¢Ğ´Èë²âÊÔ£º´ò¿ª»ò´´½¨ÎÄ¼ş£¬²¢Ğ´ÈëÊı¾İ
     printf("\r\n");
-    printf("2:æ‰“å¼€æˆ–åˆ›å»ºæ–‡ä»¶,å¹¶å†™å…¥æ•°æ® ****** \r\n");
-    f_res = f_open(&myFile, "0:text.txt", FA_CREATE_ALWAYS | FA_WRITE);   // æ‰“å¼€æ–‡ä»¶; å‚æ•°ï¼šè¦æ“ä½œçš„æ–‡ä»¶å¯¹è±¡ã€è·¯å¾„å’Œæ–‡ä»¶åç§°ã€æ‰“å¼€æ¨¡å¼;
+    printf("2:´ò¿ª»ò´´½¨ÎÄ¼ş,²¢Ğ´ÈëÊı¾İ ****** \r\n");
+    f_res = f_open(&myFile, "0:text.txt", FA_CREATE_ALWAYS | FA_WRITE);   // ´ò¿ªÎÄ¼ş; ²ÎÊı£ºÒª²Ù×÷µÄÎÄ¼ş¶ÔÏó¡¢Â·¾¶ºÍÎÄ¼şÃû³Æ¡¢´ò¿ªÄ£Ê½;
     if (f_res == FR_OK)
     {
-        printf("æ‰“å¼€æ–‡ä»¶ æˆåŠŸ \r\n");
-        printf("å†™å…¥æµ‹è¯•:");
-        f_res = f_write(&myFile, aWriteBuf, sizeof(aWriteBuf), &num);     // å‘æ–‡ä»¶å†…å†™å…¥æ•°æ®; å‚æ•°ï¼šæ–‡ä»¶å¯¹è±¡ã€æ•°æ®ç¼“å­˜ã€ç”³è¯·å†™å…¥çš„å­—èŠ‚æ•°ã€å®é™…å†™å…¥çš„å­—èŠ‚æ•°
+        printf("´ò¿ªÎÄ¼ş ³É¹¦ \r\n");
+        printf("Ğ´Èë²âÊÔ:");
+        f_res = f_write(&myFile, aWriteBuf, sizeof(aWriteBuf), &num);     // ÏòÎÄ¼şÄÚĞ´ÈëÊı¾İ; ²ÎÊı£ºÎÄ¼ş¶ÔÏó¡¢Êı¾İ»º´æ¡¢ÉêÇëĞ´ÈëµÄ×Ö½ÚÊı¡¢Êµ¼ÊĞ´ÈëµÄ×Ö½ÚÊı
         if (f_res == FR_OK)
         {
-            printf("å†™å…¥æˆåŠŸ  \r\n");
-            printf("å·²å†™å…¥å­—èŠ‚æ•°: %d \r\n", num);                         // printf å†™å…¥çš„å­—èŠ‚æ•°
-            printf("å·²å†™å…¥çš„æ•°æ®: %s \r\n", aWriteBuf);                   // printf å†™å…¥çš„æ•°æ®; æ³¨æ„ï¼Œè¿™é‡Œä»¥å­—ç¬¦ä¸²æ–¹å¼æ˜¾ç¤ºï¼Œå¦‚æœæ•°æ®æ˜¯éASCIIå¯æ˜¾ç¤ºèŒƒå›´ï¼Œåˆ™æ— æ³•æ˜¾ç¤º
+            printf("Ğ´Èë³É¹¦  \r\n");
+            printf("ÒÑĞ´Èë×Ö½ÚÊı: %d \r\n", num);                         // printf Ğ´ÈëµÄ×Ö½ÚÊı
+            printf("ÒÑĞ´ÈëµÄÊı¾İ: %s \r\n", aWriteBuf);                   // printf Ğ´ÈëµÄÊı¾İ; ×¢Òâ£¬ÕâÀïÒÔ×Ö·û´®·½Ê½ÏÔÊ¾£¬Èç¹ûÊı¾İÊÇ·ÇASCII¿ÉÏÔÊ¾·¶Î§£¬ÔòÎŞ·¨ÏÔÊ¾
         }
         else
         {
-            printf("å†™å…¥å¤±è´¥ \r\n");                                      // å†™å…¥å¤±è´¥
-            printf("Error code: %d\r\n", f_res);                           // printf é”™è¯¯ç¼–å·
+            printf("Ğ´ÈëÊ§°Ü \r\n");                                      // Ğ´ÈëÊ§°Ü
+            printf("Error code: %d\r\n", f_res);                           // printf ´íÎó±àºÅ
         }
-        f_close(&myFile);                                                 // ä¸å†è¯»å†™ï¼Œå…³é—­æ–‡ä»¶
+        f_close(&myFile);                                                 // ²»ÔÙ¶ÁĞ´£¬¹Ø±ÕÎÄ¼ş
     }
     else
     {
         printf("Open file fail: %d\r\n", f_res);
     }
  
-    // 3ã€è¯»å–æµ‹è¯•ï¼šæ‰“å¼€å·²æœ‰æ–‡ä»¶ï¼Œè¯»å–å…¶æ•°æ®
-    printf("3ã€è¯»å–æµ‹è¯•: æ‰“å¼€åˆšæ‰çš„æ–‡ä»¶ï¼Œè¯»å–å…¶æ•°æ® ****** \r\n");
-    f_res = f_open(&myFile, "0:text.txt", FA_OPEN_EXISTING | FA_READ);    // æ‰“å¼€æ–‡ä»¶; å‚æ•°ï¼šæ–‡ä»¶å¯¹è±¡ã€è·¯å¾„å’Œåç§°ã€æ“ä½œæ¨¡å¼; FA_OPEN_EXISTINGï¼šåªæ‰“å¼€å·²å­˜åœ¨çš„æ–‡ä»¶; FA_READ: ä»¥åªè¯»çš„æ–¹å¼æ‰“å¼€æ–‡ä»¶
+    // 3¡¢¶ÁÈ¡²âÊÔ£º´ò¿ªÒÑÓĞÎÄ¼ş£¬¶ÁÈ¡ÆäÊı¾İ
+    printf("3¡¢¶ÁÈ¡²âÊÔ: ´ò¿ª¸Õ²ÅµÄÎÄ¼ş£¬¶ÁÈ¡ÆäÊı¾İ ****** \r\n");
+    f_res = f_open(&myFile, "0:text.txt", FA_OPEN_EXISTING | FA_READ);    // ´ò¿ªÎÄ¼ş; ²ÎÊı£ºÎÄ¼ş¶ÔÏó¡¢Â·¾¶ºÍÃû³Æ¡¢²Ù×÷Ä£Ê½; FA_OPEN_EXISTING£ºÖ»´ò¿ªÒÑ´æÔÚµÄÎÄ¼ş; FA_READ: ÒÔÖ»¶ÁµÄ·½Ê½´ò¿ªÎÄ¼ş
     if (f_res == FR_OK)
     {
-        printf("æ‰“å¼€æ–‡ä»¶ æˆåŠŸ \r\n");
-        f_res = f_read(&myFile, aReadData, sizeof(aReadData), &num);      // ä»æ–‡ä»¶ä¸­è¯»å–æ•°æ®; å‚æ•°ï¼šæ–‡ä»¶å¯¹è±¡ã€æ•°æ®ç¼“å†²åŒºã€è¯·æ±‚è¯»å–çš„æœ€å¤§å­—èŠ‚æ•°ã€å®é™…è¯»å–çš„å­—èŠ‚æ•°
+        printf("´ò¿ªÎÄ¼ş ³É¹¦ \r\n");
+        f_res = f_read(&myFile, aReadData, sizeof(aReadData), &num);      // ´ÓÎÄ¼şÖĞ¶ÁÈ¡Êı¾İ; ²ÎÊı£ºÎÄ¼ş¶ÔÏó¡¢Êı¾İ»º³åÇø¡¢ÇëÇó¶ÁÈ¡µÄ×î´ó×Ö½ÚÊı¡¢Êµ¼Ê¶ÁÈ¡µÄ×Ö½ÚÊı
         if (f_res == FR_OK)
         {
-            printf("è¯»å–æ•°æ® æˆåŠŸ \r\n");
-            printf("å·²è¯»å–å­—èŠ‚æ•°: %d \r\n", num);                         // printf å®é™…è¯»å–çš„å­—èŠ‚æ•°
-            printf("è¯»å–åˆ°çš„æ•°æ®: %s\r\n", aReadData);                    // printf å®é™…æ•°æ®; æ³¨æ„ï¼Œè¿™é‡Œä»¥å­—ç¬¦ä¸²æ–¹å¼æ˜¾ç¤ºï¼Œå¦‚æœæ•°æ®æ˜¯éASCIIå¯æ˜¾ç¤ºèŒƒå›´ï¼Œåˆ™æ— æ³•æ˜¾ç¤º
+            printf("¶ÁÈ¡Êı¾İ ³É¹¦ \r\n");
+            printf("ÒÑ¶ÁÈ¡×Ö½ÚÊı: %d \r\n", num);                         // printf Êµ¼Ê¶ÁÈ¡µÄ×Ö½ÚÊı
+            printf("¶ÁÈ¡µ½µÄÊı¾İ: %s\r\n", aReadData);                    // printf Êµ¼ÊÊı¾İ; ×¢Òâ£¬ÕâÀïÒÔ×Ö·û´®·½Ê½ÏÔÊ¾£¬Èç¹ûÊı¾İÊÇ·ÇASCII¿ÉÏÔÊ¾·¶Î§£¬ÔòÎŞ·¨ÏÔÊ¾
         }
         else
         {
-            printf("è¯»å– å¤±è´¥  \r\n");                                    // printf è¯»å–å¤±è´¥
-            printf("é”™è¯¯ç¼–å·ï¼š%d \r\n", f_res);                           // printf é”™è¯¯ç¼–å·
+            printf("¶ÁÈ¡ Ê§°Ü  \r\n");                                    // printf ¶ÁÈ¡Ê§°Ü
+            printf("´íÎó±àºÅ£º%d \r\n", f_res);                           // printf ´íÎó±àºÅ
         }
     }
     else
     {
-        printf("æ‰“å¼€æ–‡ä»¶ å¤±è´¥ \r\n");                                     // printf æ‰“å¼€æ–‡ä»¶ å¤±è´¥
-        printf("é”™è¯¯ç¼–å·: %d\r\n", f_res);                                // printf é”™è¯¯ç¼–å·
+        printf("´ò¿ªÎÄ¼ş Ê§°Ü \r\n");                                     // printf ´ò¿ªÎÄ¼ş Ê§°Ü
+        printf("´íÎó±àºÅ: %d\r\n", f_res);                                // printf ´íÎó±àºÅ
     }
  
-    f_close(&myFile);                                                     // ä¸å†è¯»å†™ï¼Œå…³é—­æ–‡ä»¶
-    f_mount(NULL, "0:", 1);                                               // ä¸å†ä½¿ç”¨æ–‡ä»¶ç³»ç»Ÿï¼Œå–æ¶ˆæŒ‚è½½æ–‡ä»¶ç³»ç»Ÿ
+    f_close(&myFile);                                                     // ²»ÔÙ¶ÁĞ´£¬¹Ø±ÕÎÄ¼ş
+    f_mount(NULL, "0:", 1);                                               // ²»ÔÙÊ¹ÓÃÎÄ¼şÏµÍ³£¬È¡Ïû¹ÒÔØÎÄ¼şÏµÍ³
 }
 
-// è·å–SDå¡ä¿¡æ¯
-// æ³¨æ„: æœ¬å‡½æ•°éœ€è¦åœ¨f_mount()æ‰§è¡Œåå†è°ƒç”¨ï¼Œå› ä¸ºCubeMXç”Ÿæˆçš„FatFsä»£ç , ä¼šåœ¨f_mount()å‡½æ•°å†…å¯¹SDå¡è¿›è¡Œåˆå§‹åŒ–
+// »ñÈ¡SD¿¨ĞÅÏ¢
+// ×¢Òâ: ±¾º¯ÊıĞèÒªÔÚf_mount()Ö´ĞĞºóÔÙµ÷ÓÃ£¬ÒòÎªCubeMXÉú³ÉµÄFatFs´úÂë, »áÔÚf_mount()º¯ÊıÄÚ¶ÔSD¿¨½øĞĞ³õÊ¼»¯
 void SDCardInfo(void)
 {
-    HAL_SD_CardInfoTypeDef pCardInfo = {0};                    // SDå¡ä¿¡æ¯ç»“æ„ä½“
-    uint8_t status = HAL_SD_GetCardState(&hsd);                // SDå¡çŠ¶æ€æ ‡å¿—å€¼
+    HAL_SD_CardInfoTypeDef pCardInfo = {0};                    // SD¿¨ĞÅÏ¢½á¹¹Ìå
+    uint8_t status = HAL_SD_GetCardState(&hsd);                // SD¿¨×´Ì¬±êÖ¾Öµ
     if (status == HAL_SD_CARD_TRANSFER)
     {
-        HAL_SD_GetCardInfo(&hsd, &pCardInfo);                  // è·å– SD å¡çš„ä¿¡æ¯
+        HAL_SD_GetCardInfo(&hsd, &pCardInfo);                  // »ñÈ¡ SD ¿¨µÄĞÅÏ¢
         printf("\r\n");
-        printf("*** è·å–SDå¡ä¿¡æ¯ *** \r\n");
-        printf("å¡ç±»å‹: %d \r\n", pCardInfo.CardType);         // ç±»å‹è¿”å›ï¼š0-SDSCã€1-SDHC/SDXCã€3-SECURED
-        printf("å¡ç‰ˆæœ¬: %d \r\n", pCardInfo.CardVersion);      // ç‰ˆæœ¬è¿”å›ï¼š0-CARD_V1ã€1-CARD_V2
-        printf("å—æ•°é‡: %d \r\n", pCardInfo.BlockNbr);         // å¯ç”¨çš„å—æ•°é‡
-        printf("å—å¤§å°: %d \r\n", pCardInfo.BlockSize);        // æ¯ä¸ªå—çš„å¤§å°; å•ä½ï¼šå­—èŠ‚
-        printf("å¡å®¹é‡: %lluG \r\n", ((uint64_t)pCardInfo.BlockSize * pCardInfo.BlockNbr) / 1024 / 1024 / 1024);  // è®¡ç®—å¡çš„å®¹é‡; å•ä½ï¼šGB
+        printf("*** »ñÈ¡SD¿¨ĞÅÏ¢ *** \r\n");
+        printf("¿¨ÀàĞÍ: %d \r\n", pCardInfo.CardType);         // ÀàĞÍ·µ»Ø£º0-SDSC¡¢1-SDHC/SDXC¡¢3-SECURED
+        printf("¿¨°æ±¾: %d \r\n", pCardInfo.CardVersion);      // °æ±¾·µ»Ø£º0-CARD_V1¡¢1-CARD_V2
+        printf("¿éÊıÁ¿: %d \r\n", pCardInfo.BlockNbr);         // ¿ÉÓÃµÄ¿éÊıÁ¿
+        printf("¿é´óĞ¡: %d \r\n", pCardInfo.BlockSize);        // Ã¿¸ö¿éµÄ´óĞ¡; µ¥Î»£º×Ö½Ú
+        printf("¿¨ÈİÁ¿: %lluG \r\n", ((uint64_t)pCardInfo.BlockSize * pCardInfo.BlockNbr) / 1024 / 1024 / 1024);  // ¼ÆËã¿¨µÄÈİÁ¿; µ¥Î»£ºGB
     }
 }
+
+
 
 /* USER CODE END 0 */
 
@@ -221,8 +223,39 @@ int main(void)
   MX_SDIO_SD_Init();
   MX_FATFS_Init();
   /* USER CODE BEGIN 2 */
-  FatFsTest();      // FatFsæ–‡ä»¶ç³»ç»ŸæŒ‚è½½ã€æ ¼å¼åŒ–ã€è¯»å†™æµ‹è¯•
-  SDCardInfo();    // è·å–SDå¡ä¿¡æ¯
+  FatFsTest();      // FatFsÎÄ¼şÏµÍ³¹ÒÔØ¡¢¸ñÊ½»¯¡¢¶ÁĞ´²âÊÔ
+  SDCardInfo();    // »ñÈ¡SD¿¨ĞÅÏ¢                                              // FatFs ÎÄ¼şÏµÍ³¶ÔÏó; Õâ¸ö½á¹¹ÌåÕ¼ÓÃ598×Ö½Ú£¬ÓĞµã´ó£¬ĞèÓÃstaticĞŞÊÎ(´æ·ÅÔÚÈ«¾ÖÊı¾İÇø), ±ÜÃâstackÒç³ö
+  FATFS myFatFs;  
+  FIL myFile;                                                    // ÎÄ¼ş¶ÔÏó; Õâ¸ö½á¹¹ÌåÕ¼ÓÃ570×Ö½Ú£¬ÓĞµã´ó£¬ĞèÓÃstaticĞŞÊÎ(´æ·ÅÔÚÈ«¾ÖÊı¾İÇø), ±ÜÃâstackÒç³ö
+  FRESULT f_res; 
+  f_res = f_mount(&myFatFs, "0:", 1); 
+  TCHAR readBuf[128];
+  TCHAR result[128];
+  if(f_res == FR_OK)
+  {
+      printf("Mount again success!\r\n");
+      f_res = f_open(&myFile, "0:³Ì°¬Ó°-ÕÔÀ×.lrc", FA_OPEN_EXISTING | FA_READ);
+      if(f_res == FR_OK)
+      {
+          printf("Open file success!\r\n");
+          f_gets(readBuf,128, &myFile);
+          
+          printf("Read data: %s\r\n", readBuf); // ´òÓ¡¶ÁÈ¡µ½µÄÊı¾İ
+      }
+      else
+      {
+        /* code */
+        printf("Open file fail! Error code: %d\r\n", f_res); // ´ò¿ªÎÄ¼şÊ§°Ü
+      }
+      f_close(&myFile); // ¶ÁÈ¡Íê³Éºó¹Ø±ÕÎÄ¼ş
+      
+  }
+  else
+  {
+      printf("Mount again fail! Error code: %d\r\n", f_res);
+  }
+
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -230,7 +263,9 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-
+    HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13); // ÇĞ»»PC13Òı½Å×´Ì¬
+    printf("System running...\r\n");
+    HAL_Delay(500); // ÑÓÊ±500ºÁÃë
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
