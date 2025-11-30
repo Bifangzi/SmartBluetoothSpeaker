@@ -26,7 +26,9 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "stdio.h"
 #include "string.h"
+#include "lrc.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -225,36 +227,17 @@ int main(void)
   /* USER CODE BEGIN 2 */
   FatFsTest();      // FatFs文件系统挂载、格式化、读写测试
   SDCardInfo();    // 获取SD卡信息                                              // FatFs 文件系统对象; 这个结构体占用598字节，有点大，需用static修饰(存放在全局数据区), 避免stack溢出
-  FATFS myFatFs;  
-  FIL myFile;                                                    // 文件对象; 这个结构体占用570字节，有点大，需用static修饰(存放在全局数据区), 避免stack溢出
-  FRESULT f_res; 
-  f_res = f_mount(&myFatFs, "0:", 1); 
-  TCHAR readBuf[128];
-  TCHAR result[128];
-  if(f_res == FR_OK)
-  {
-      printf("Mount again success!\r\n");
-      f_res = f_open(&myFile, "0:程艾影-赵雷.lrc", FA_OPEN_EXISTING | FA_READ);
-      if(f_res == FR_OK)
-      {
-          printf("Open file success!\r\n");
-          f_gets(readBuf,128, &myFile);
-          
-          printf("Read data: %s\r\n", readBuf); // 打印读取到的数据
-      }
-      else
-      {
-        /* code */
-        printf("Open file fail! Error code: %d\r\n", f_res); // 打开文件失败
-      }
-      f_close(&myFile); // 读取完成后关闭文件
-      
-  }
-  else
-  {
-      printf("Mount again fail! Error code: %d\r\n", f_res);
-  }
 
+  FRESULT res;
+  res = LRC_Read_Parse("0:程艾影-赵雷.lrc"); // 读取并解析LRC歌词文件
+  if (res == FR_OK)
+    {
+        printf("LRC Parse (No Callback) Success!\r\n");
+    }
+    else
+    {
+        printf("LRC Parse Fail! Error code: %d\r\n", res);
+    }
 
   /* USER CODE END 2 */
 
@@ -264,7 +247,7 @@ int main(void)
   {
     /* USER CODE END WHILE */
     HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13); // 切换PC13引脚状态
-    printf("System running...\r\n");
+    // printf("System running...\r\n");
     HAL_Delay(500); // 延时500毫秒
     /* USER CODE BEGIN 3 */
   }
