@@ -3,7 +3,7 @@ set(CMAKE_HOST_SYSTEM_NAME "Windows")
 set(CMAKE_HOST_SYSTEM_VERSION "10.0.22000")
 set(CMAKE_HOST_SYSTEM_PROCESSOR "AMD64")
 
-include("D:/espressif/v5.3.4/esp-idf/tools/cmake/toolchain-esp32p4.cmake")
+include("D:/espressif/v5.5.1/esp-idf/tools/cmake/toolchain-esp32p4.cmake")
 
 set(CMAKE_SYSTEM "Generic")
 set(CMAKE_SYSTEM_NAME "Generic")

@@ -20,6 +20,10 @@ D:/Desktop/GraduationProject/smartbluetoothspeaker/build/bootloader/CMakeFiles/e
 D:/Desktop/GraduationProject/smartbluetoothspeaker/build/bootloader/CMakeFiles/rebuild_cache.dir
 D:/Desktop/GraduationProject/smartbluetoothspeaker/build/bootloader/esp-idf/CMakeFiles/edit_cache.dir
 D:/Desktop/GraduationProject/smartbluetoothspeaker/build/bootloader/esp-idf/CMakeFiles/rebuild_cache.dir
+D:/Desktop/GraduationProject/smartbluetoothspeaker/build/bootloader/esp-idf/hal/CMakeFiles/__idf_hal.dir
+D:/Desktop/GraduationProject/smartbluetoothspeaker/build/bootloader/esp-idf/hal/CMakeFiles/edit_cache.dir
+D:/Desktop/GraduationProject/smartbluetoothspeaker/build/bootloader/esp-idf/hal/CMakeFiles/rebuild_cache.dir
+D:/Desktop/GraduationProject/smartbluetoothspeaker/build/bootloader/esp-idf/riscv/CMakeFiles/__idf_riscv.dir
 D:/Desktop/GraduationProject/smartbluetoothspeaker/build/bootloader/esp-idf/riscv/CMakeFiles/edit_cache.dir
 D:/Desktop/GraduationProject/smartbluetoothspeaker/build/bootloader/esp-idf/riscv/CMakeFiles/rebuild_cache.dir
 D:/Desktop/GraduationProject/smartbluetoothspeaker/build/bootloader/esp-idf/newlib/CMakeFiles/edit_cache.dir
@@ -30,9 +34,6 @@ D:/Desktop/GraduationProject/smartbluetoothspeaker/build/bootloader/esp-idf/soc/
 D:/Desktop/GraduationProject/smartbluetoothspeaker/build/bootloader/esp-idf/micro-ecc/CMakeFiles/__idf_micro-ecc.dir
 D:/Desktop/GraduationProject/smartbluetoothspeaker/build/bootloader/esp-idf/micro-ecc/CMakeFiles/edit_cache.dir
 D:/Desktop/GraduationProject/smartbluetoothspeaker/build/bootloader/esp-idf/micro-ecc/CMakeFiles/rebuild_cache.dir
-D:/Desktop/GraduationProject/smartbluetoothspeaker/build/bootloader/esp-idf/hal/CMakeFiles/__idf_hal.dir
-D:/Desktop/GraduationProject/smartbluetoothspeaker/build/bootloader/esp-idf/hal/CMakeFiles/edit_cache.dir
-D:/Desktop/GraduationProject/smartbluetoothspeaker/build/bootloader/esp-idf/hal/CMakeFiles/rebuild_cache.dir
 D:/Desktop/GraduationProject/smartbluetoothspeaker/build/bootloader/esp-idf/spi_flash/CMakeFiles/__idf_spi_flash.dir
 D:/Desktop/GraduationProject/smartbluetoothspeaker/build/bootloader/esp-idf/spi_flash/CMakeFiles/edit_cache.dir
 D:/Desktop/GraduationProject/smartbluetoothspeaker/build/bootloader/esp-idf/spi_flash/CMakeFiles/rebuild_cache.dir
@@ -54,6 +55,8 @@ D:/Desktop/GraduationProject/smartbluetoothspeaker/build/bootloader/esp-idf/efus
 D:/Desktop/GraduationProject/smartbluetoothspeaker/build/bootloader/esp-idf/efuse/CMakeFiles/efuse_test_table.dir
 D:/Desktop/GraduationProject/smartbluetoothspeaker/build/bootloader/esp-idf/efuse/CMakeFiles/edit_cache.dir
 D:/Desktop/GraduationProject/smartbluetoothspeaker/build/bootloader/esp-idf/efuse/CMakeFiles/rebuild_cache.dir
+D:/Desktop/GraduationProject/smartbluetoothspeaker/build/bootloader/esp-idf/esp_security/CMakeFiles/edit_cache.dir
+D:/Desktop/GraduationProject/smartbluetoothspeaker/build/bootloader/esp-idf/esp_security/CMakeFiles/rebuild_cache.dir
 D:/Desktop/GraduationProject/smartbluetoothspeaker/build/bootloader/esp-idf/esp_system/CMakeFiles/__idf_esp_system.dir
 D:/Desktop/GraduationProject/smartbluetoothspeaker/build/bootloader/esp-idf/esp_system/CMakeFiles/edit_cache.dir
 D:/Desktop/GraduationProject/smartbluetoothspeaker/build/bootloader/esp-idf/esp_system/CMakeFiles/rebuild_cache.dir
@@ -62,6 +65,8 @@ D:/Desktop/GraduationProject/smartbluetoothspeaker/build/bootloader/esp-idf/esp_
 D:/Desktop/GraduationProject/smartbluetoothspeaker/build/bootloader/esp-idf/esp_hw_support/CMakeFiles/rebuild_cache.dir
 D:/Desktop/GraduationProject/smartbluetoothspeaker/build/bootloader/esp-idf/esp_hw_support/port/esp32p4/CMakeFiles/edit_cache.dir
 D:/Desktop/GraduationProject/smartbluetoothspeaker/build/bootloader/esp-idf/esp_hw_support/port/esp32p4/CMakeFiles/rebuild_cache.dir
+D:/Desktop/GraduationProject/smartbluetoothspeaker/build/bootloader/esp-idf/esp_hw_support/mspi_timing_tuning/port/esp32p4/CMakeFiles/edit_cache.dir
+D:/Desktop/GraduationProject/smartbluetoothspeaker/build/bootloader/esp-idf/esp_hw_support/mspi_timing_tuning/port/esp32p4/CMakeFiles/rebuild_cache.dir
 D:/Desktop/GraduationProject/smartbluetoothspeaker/build/bootloader/esp-idf/esp_hw_support/lowpower/CMakeFiles/edit_cache.dir
 D:/Desktop/GraduationProject/smartbluetoothspeaker/build/bootloader/esp-idf/esp_hw_support/lowpower/CMakeFiles/rebuild_cache.dir
 D:/Desktop/GraduationProject/smartbluetoothspeaker/build/bootloader/esp-idf/esp_common/CMakeFiles/__idf_esp_common.dir

@@ -24,7 +24,7 @@
 
  * Automatically generated file. DO NOT EDIT.
 
- * Espressif IoT Development Framework (ESP-IDF) 5.3.4 Configuration Header
+ * Espressif IoT Development Framework (ESP-IDF) 5.5.1 Configuration Header
 
  */
        
@@ -94,7 +94,7 @@ MEMORY
 
    */
   sram_low (RWX) : org = 0x4FF00000, len = 0x4FF2CBD0 - 0x4FF00000
-  sram_high (RW) : org = 0x4FF40000, len = 0x80000 - 0x20000
+  sram_high (RW) : org = 0x4FF40000, len = 0x80000 - 0x40000
   /* Flash mapped constant data */
   drom_seg (R) : org = 0x40000020, len = (0x10000 << 10) - 0x20
   /* (See irom_seg for meaning of 0x20 offset in the above.) */
